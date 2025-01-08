@@ -10,11 +10,11 @@ export const protect = async (req , res , next)=>{
             // Get Token
             token = req.headers.authorization.split(' ')[1]
 
-            //Verify Token
+            //Verify Token 
             const decoded = JWT.verify(token , process.env.JWT_secret)
 
             // Check / Find User
-            req.user = await User.findById(decoded.id)
+            req.user = await User.findById(decoded.id).select("-password")
 
             next()
         } catch (error) {

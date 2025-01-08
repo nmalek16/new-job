@@ -50,7 +50,11 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid email or password" });
         }
         if (isMatch) {
-            return res.status(200).json({id : user._id , email : user.email , fullName : user.fullName , token : GenerateToken(user._id)});
+        return res.status(200).json({
+            id : user._id ,
+            email : user.email ,
+            fullName : user.fullName ,
+            token : GenerateToken(user._id)});
         }
     } catch (error) {
         console.log(error)
@@ -60,7 +64,14 @@ export const login = async (req, res) => {
 };
 
 export const GetProfile = (req,res)=>{
-    return res.status(200).json({message : 'user data '})
+    const { email , fullName , _id } = req.user
+
+    return res.status(200).json({
+        id : _id,
+        fullName,
+        email
+    })
+
 }
 
 const GenerateToken = (id)=>{
